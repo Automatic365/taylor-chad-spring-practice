@@ -26,6 +26,7 @@ import static org.hamcrest.CoreMatchers.isA;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertEquals;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -47,7 +48,7 @@ public class LessonRealDatabaseTest {
     @Rollback
     @Test
     public void createGeneratesANewLesson() throws Exception {
-        assertEquals(((Collection<?>)repository.findAll()).size(), 0);
+        assertEquals(((Collection<LessonModel>)repository.findAll()).size(), 0);
 
         mockMvc.perform(post("/lessons")
                 .contentType(MediaType.APPLICATION_JSON)
@@ -55,6 +56,18 @@ public class LessonRealDatabaseTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.title", is("Mock me another one!")));
 
-        assertEquals(((Collection<?>)repository.findAll()).size(), 1);
+        assertEquals(((Collection<LessonModel>)repository.findAll()).size(), 1);
     }
+
+//    @Transactional
+//    @Rollback
+//    @Test
+//    public void updateModifiesExistingRecord() {
+//        LessonModel lesson = new LessonModel();
+//        lesson.setTitle("Old Title");
+//        repository.save(lesson);
+//
+//        mockMvc.perform(patch("/lessons/" + lesson.getId()))
+//
+//    }
 }
