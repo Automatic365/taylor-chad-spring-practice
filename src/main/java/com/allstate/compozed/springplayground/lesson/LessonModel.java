@@ -18,6 +18,15 @@ final class LessonModel {
     private Long id;
     private String title;
 
+    @Override
+    public String toString() {
+        return "LessonModel{" +
+                "deliveredOn=" + deliveredOn +
+                ", id=" + id +
+                ", title='" + title + '\'' +
+                '}';
+    }
+
     public Long getId() {
         return id;
     }
